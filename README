@@ -1,0 +1,149 @@
+
+# ESP32 MQTT Bell with Telegram Bot
+
+This project uses an ESP32 to connect to WiFi and an MQTT broker, allowing it to download and play audio files, control LEDs, and handle various MQTT commands. Additionally, a Telegram bot is used to send commands to the ESP32 and receive status updates.
+
+## Features
+
+### ESP32
+
+- Connect to WiFi and MQTT broker
+- Download audio files from given URLs and store them in SPIFFS
+- Play the downloaded audio files
+- Control LEDs based on MQTT messages
+- Set volume and respond to status requests
+
+### Telegram Bot
+
+- Send commands to ESP32 via MQTT
+- Receive status updates and responses from ESP32
+- Handle audio and voice messages from Telegram
+
+## Requirements
+
+- ESP32 development board
+- Arduino IDE with ESP32 support
+- Python 3.x environment
+- Telegram bot token
+- Libraries: WiFi, SPIFFS, PubSubClient, HTTPClient, ArduinoJson, telebot, paho-mqtt
+
+## Installation
+
+### ESP32
+
+1. **Install Arduino IDE:**
+   Download and install the Arduino IDE from [here](https://www.arduino.cc/en/Main/Software).
+
+2. **Install ESP32 Board:**
+   Add ESP32 support to the Arduino IDE by following the instructions [here](https://github.com/espressif/arduino-esp32#installation-instructions).
+
+3. **Install Required Libraries:**
+   Install the following libraries via the Arduino Library Manager:
+   - WiFi
+   - SPIFFS
+   - PubSubClient
+   - HTTPClient
+   - ArduinoJson
+
+4. **Upload Code to ESP32:**
+   Open the `ESP32-MQTT-Bell.ino` file in the Arduino IDE, select your ESP32 board and the correct port, and upload the code.
+
+### Telegram Bot
+
+1. **Clone this Repository:**
+   ```sh
+   git clone https://github.com/yourusername/ESP32-MQTT-Bell.git
+   ```
+
+2. **Install Required Python Packages:**
+   ```sh
+   pip install telebot paho-mqtt
+   ```
+
+3. **Configure Telegram Bot Token:**
+   Replace `BOT_TOKEN` in `config.py` with your actual Telegram bot token.
+
+4. **Run the Bot:**
+   ```sh
+   python bot.py
+   ```
+
+## Configuration
+
+### ESP32
+
+- **WiFi settings:**
+  ```cpp
+  const char* ssid = "Network";
+  const char* password = "4467996m";
+  ```
+
+- **MQTT settings:**
+  ```cpp
+  const char* mqtt_server = "13.60.35.236";
+  const int mqtt_port = 1883;
+  const char* mqtt_user = "userTTPU";
+  const char* mqtt_password = "mqttpass";
+  const char* mqtt_topic_subscribe = "ttpu/User";
+  const char* mqtt_topic_publish = "ttpu/Response";
+  ```
+
+- **LED pins:**
+  ```cpp
+  const int led_1 = 32;
+  const int led_2 = 25;
+  const int led_connection = 27;
+  ```
+
+### Telegram Bot
+
+- **MQTT settings:**
+  ```python
+  MQTT_BROKER = "13.60.35.236"
+  MQTT_PORT = 1883
+  MQTT_TOPIC_REQUEST = "ttpu/User"
+  MQTT_TOPIC_RESPONSE = "ttpu/Response"
+  USERNAME = "userTTPU1"
+  PASSWORD = "mqttpass1"
+  ```
+
+## Usage
+
+### ESP32 Commands
+
+- `ringbell_audio_1: <url>`: Download and store the audio file from the provided URL.
+- `status`: Send a status response with connection details and last downloaded file.
+- `play`: Play the last downloaded audio file.
+- `ring`: Play the default audio file.
+- `stop`: Stop playing the audio.
+- `volume:<0-9>`: Set the volume to the specified level (0-9).
+
+### Telegram Bot Commands
+
+- `/start`: Welcome message and authorization check.
+- `/ring`: Send ring command to ESP32.
+- `/status`: Request status update from ESP32.
+- `/play`: Play the last downloaded audio file on ESP32.
+- `/stop`: Stop playing audio on ESP32.
+- Sending audio or voice message: Sends the file URL to ESP32 for playback.
+- `volume:<0-9>`: Set the volume to the specified level (0-9).
+
+### LEDs on ESP32
+
+- `led_1`: Blinks when a message is received.
+- `led_2`: Blinks when a response is sent.
+- `led_connection`: Indicates connection status (ON: connected, OFF: not connected).
+
+## License
+
+This project is licensed under the MIT License.
+
+## Contributing
+
+Contributions are welcome! Please open an issue or submit a pull request.
+
+## Author
+
+Your Name - Mironshoh (@Mironshoh03)
+
+
